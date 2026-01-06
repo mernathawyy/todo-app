@@ -1,14 +1,29 @@
-- name: Install Docker on VM
+---
+- name: Install Docker on VM (Full setup)
   hosts: todo-vm
   become: true
+
   tasks:
-    - name: Update apt
+    - name: Remove old / conflicting Docker packages
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - docker-compose-v2
+          - docker-doc
+          - podman-docker
+          - containerd
+          - runc
+        state: absent
+        purge: yes
+
+    - name: Update apt cache
       apt:
         update_cache: yes
 
     - name: Install prerequisites
       apt:
-        name: 
+        name:
           - apt-transport-https
           - ca-certificates
           - curl
@@ -22,18 +37,26 @@
 
     - name: Add Docker repository
       apt_repository:
-        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
-        stat:we: present
+        repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        state: present
 
-    - name: Install Docker
+    - name: Update apt cache after adding Docker repo
       apt:
-        name: docker-ce
+        update_cache: yes
+
+    - name: Install Docker packages
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
         state: latest
         update_cache: yes
 
-    - name: Ensure Docker is running
+    - name: Ensure Docker service is running and enabled
       service:
         name: docker
         state: started
         enabled: yes
-
