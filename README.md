@@ -67,7 +67,7 @@ The Docker image was built and tested locally to ensure it works correctly.
 docker build -t todo-app .
 docker run -p 4000:4000 todo-app
 ```
-![docker container run succesfully] <img width="1920" height="1028" alt="Screenshot 2026-01-12 141450" src="https://github.com/user-attachments/assets/2398b810-2f93-4257-8d63-d019b962bd40" />
+![docker container run succesfully](<img width="1920" height="1028" alt="Screenshot 2026-01-12 141450" src="https://github.com/user-attachments/assets/2398b810-2f93-4257-8d63-d019b962bd40" />)
 
 
 ### Step 5: Create CI Pipeline Using GitHub Actions
