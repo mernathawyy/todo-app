@@ -19,7 +19,7 @@ The application repository was cloned from GitHub:
 
 `git clone https://github.com/Ankit6098/Todo-List-nodejs.git `
 
-cd Todo-List-nodejs
+`cd Todo-List-nodejs `
 
 
 ### Step 2: Configure MongoDB Database
@@ -49,7 +49,7 @@ Installed dependencies
 Exposed application port
 
 Used npm start as entrypoint
-
+```bash
 FROM node:18
 WORKDIR /app
 COPY package*.json ./
