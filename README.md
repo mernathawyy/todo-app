@@ -57,7 +57,7 @@ RUN npm install
 COPY . .
 EXPOSE 4000
 CMD ["npm", "start"]
-
+```
 
 
 ### Step 4: Build and Test Docker Image Locally
