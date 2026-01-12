@@ -83,12 +83,62 @@ Workflow file:
 
 Pipeline steps:
 
--Checkout code
--Login to Docker Hub using secrets
--Build image
--Push image
+Checkout code
+
+Login to Docker Hub using secrets
+
+Build image
+
+Push image
 
 
 <img width="1920" height="894" alt="image" src="https://github.com/user-attachments/assets/898ae213-1bd3-447b-9089-de714e083f4f" />
 
 
+
+🔹 Part 2: Configuration Management with Ansible (30 Points)
+Objective
+
+Provision a Linux VM and configure it using Ansible from the local machine.
+
+Step 1: Create Linux VM
+
+A Linux virtual machine was created using AWS.
+<img width="1920" height="239" alt="image" src="https://github.com/user-attachments/assets/edfd45c3-b443-4b3c-98a6-b2e04186353b" />
+
+<img width="1920" height="257" alt="image" src="https://github.com/user-attachments/assets/3ee5d9eb-0b70-4baa-a033-f104b79e4664" />
+
+VM running (OS info or terminal)
+
+Step 2: Install Ansible on Local Machine
+
+Ansible was installed on the local machine.
+
+sudo apt install ansible -y
+
+
+Step 3: Configure Inventory File
+
+An inventory file was created pointing to the VM IP.
+
+[vm]
+192.168.x.x ansible_user=merna ssh=mykeypath
+
+
+Step 4: Ansible Playbook to Install Docker
+
+An Ansible playbook was created to:
+
+Update system
+
+Install Docker
+
+Enable and start Docker service
+
+ansible-playbook install-docker.yml
+
+
+<img width="960" height="1020" alt="Screenshot 2026-01-12 150624" src="https://github.com/user-attachments/assets/7625a940-14e3-4d46-9397-072f81cd14aa" />
+
+Playbook file
+Successful playbook execution
