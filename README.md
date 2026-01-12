@@ -17,7 +17,7 @@ Containerize the Todo Node.js application and build a CI pipeline that pushes th
 
 The application repository was cloned from GitHub:
 
-git clone https://github.com/Ankit6098/Todo-List-nodejs.git
+`git clone https://github.com/Ankit6098/Todo-List-nodejs.git `
 
 cd Todo-List-nodejs
 
