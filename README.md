@@ -87,17 +87,17 @@ Workflow file:
 
 **Pipeline steps:**
 
-Checkout code
+1. Checkout code
 
-Login to Docker Hub using secrets
+2. Login to Docker Hub using secrets
 
-Build image
+3. Build image
 
-Push image
+4. Push image
 
 
-<img width="1920" height="894" alt="image" src="https://github.com/user-attachments/assets/898ae213-1bd3-447b-9089-de714e083f4f" />
-<img width="1920" height="1020" alt="Screenshot 2026-01-12 142514" src="https://github.com/user-attachments/assets/7502cc74-206e-4466-ab33-e539a934cdd8" />
+![github actions] <img width="1920" height="894" alt="image" src="https://github.com/user-attachments/assets/898ae213-1bd3-447b-9089-de714e083f4f" />
+![image pushed succesfully in DockerHub] <img width="1920" height="1020" alt="Screenshot 2026-01-12 142514" src="https://github.com/user-attachments/assets/7502cc74-206e-4466-ab33-e539a934cdd8" />
 
 
 
@@ -109,44 +109,43 @@ Provision a Linux VM and configure it using Ansible from the local machine.
 ### Step 1: Create Linux VM
 
 A Linux virtual machine was created using AWS.
-<img width="1920" height="239" alt="image" src="https://github.com/user-attachments/assets/edfd45c3-b443-4b3c-98a6-b2e04186353b" />
+![EC2 running in AWS]<img width="1920" height="239" alt="image" src="https://github.com/user-attachments/assets/edfd45c3-b443-4b3c-98a6-b2e04186353b" />
 
-<img width="1920" height="257" alt="image" src="https://github.com/user-attachments/assets/3ee5d9eb-0b70-4baa-a033-f104b79e4664" />
+![use linux OS in the EC2] <img width="1920" height="257" alt="image" src="https://github.com/user-attachments/assets/3ee5d9eb-0b70-4baa-a033-f104b79e4664" />
 
-VM running (OS info or terminal)
 
 ### Step 2: Install Ansible on Local Machine
 
 Ansible was installed on the local machine.
 
-sudo apt install ansible -y
+`sudo apt install ansible -y `
 
 
 ### Step 3: Configure Inventory File
 
 An inventory file was created pointing to the VM IP.
 
+```bash
 [vm]
 192.168.x.x ansible_user=merna ssh=mykeypath
-
+```
 
 ### Step 4: Ansible Playbook to Install Docker
 
 An Ansible playbook was created to:
 
-Update system
+1. Update system
 
-Install Docker
+2. Install Docker
 
-Enable and start Docker service
+3. Enable and start Docker service
 
-ansible-playbook install-docker.yml
+4. ansible-playbook install-docker.yml
 
 
-<img width="960" height="1020" alt="Screenshot 2026-01-12 150624" src="https://github.com/user-attachments/assets/7625a940-14e3-4d46-9397-072f81cd14aa" />
+![Playbook file
+Successful playbook execution]<img width="960" height="1020" alt="Screenshot 2026-01-12 150624" src="https://github.com/user-attachments/assets/7625a940-14e3-4d46-9397-072f81cd14aa" />
 
-Playbook file
-Successful playbook execution
 
 
 ## Part 3: Application Deployment & Auto Update (40 Points)
@@ -160,25 +159,26 @@ A docker-compose.yml file was created to run the application.
 
 **Key features:**
 
-Uses Docker image from registry
+1. Uses Docker image from registry
 
-Maps ports
+2. Maps ports
 
-Uses .env file
+3. Uses .env file
 
-Configured health check
+4. Configured health check
 
+```bash
 healthcheck:
   test: ["CMD", "curl", "-f", "http://localhost:4000"]
   interval: 30s
   retries: 3
-
+```
 ### Step 2: Run Application on VM
 
 The application was successfully started on the VM.
 
-docker compose up -d
-<img width="960" height="1020" alt="Screenshot 2026-01-12 151518" src="https://github.com/user-attachments/assets/456025fb-fd74-4b94-993a-bed2c571ec38" />
+`docker compose up -d `
+![pods running using compose] <img width="960" height="1020" alt="Screenshot 2026-01-12 151518" src="https://github.com/user-attachments/assets/456025fb-fd74-4b94-993a-bed2c571ec38" />
 
 ## Part 4: Bonus – Kubernetes & GitOps with ArgoCD (50 Points)
 **Objective**
@@ -189,49 +189,50 @@ Replace Docker Compose with Kubernetes and use ArgoCD for Continuous Deployment.
 
 Minikube was used to create a Kubernetes cluster.
 
-minikube start
+`minikube start `
 
 ### Step 2: Kubernetes Manifests
 
 Created Kubernetes manifests:
 
-Deployment
 
-Service (NodePort)
-<img width="960" height="1020" alt="Screenshot 2026-01-12 190523" src="https://github.com/user-attachments/assets/f9f21b63-ac4d-4d9f-8145-b4ef259a2c29" />
-<img width="960" height="1020" alt="Screenshot 2026-01-12 191157" src="https://github.com/user-attachments/assets/bf7b8036-9dd3-46b6-95cb-a0ef7fcf9a90" />
+
+
+![pods in Deployment successfully running] <img width="960" height="1020" alt="Screenshot 2026-01-12 190523" src="https://github.com/user-attachments/assets/f9f21b63-ac4d-4d9f-8145-b4ef259a2c29" />
+![ Service (NodePort)] <img width="960" height="1020" alt="Screenshot 2026-01-12 191157" src="https://github.com/user-attachments/assets/bf7b8036-9dd3-46b6-95cb-a0ef7fcf9a90" />
 
 
 ### Step 3: Install ArgoCD
 
 ArgoCD was installed in the cluster.
 
+```bash
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
+```
 
 ### Step 4: ArgoCD Application (GitOps)
 
 An ArgoCD Application was created pointing to the GitHub repository containing Kubernetes manifests.
 
-Repo URL
+1.Repo URL
 
-Path to manifests
+2.Path to manifests
 
-Target namespace
+3.Target namespace
 
-Auto-sync enabled
+4.Auto-sync enabled
 <img width="960" height="1020" alt="Screenshot 2026-01-12 212947" src="https://github.com/user-attachments/assets/cf1a193e-0547-4608-9dd6-ae108ddac980" />
 
 ## Final Result
 
-CI pipeline builds and pushes images automatically
+1. CI pipeline builds and pushes images automatically
 
-Infrastructure configured using Ansible
+2. Infrastructure configured using Ansible
 
-Application auto-updates on image changes
+3. Application auto-updates on image changes
 
-Kubernetes deployment managed via GitOps using ArgoCD
+4. Kubernetes deployment managed via GitOps using ArgoCD
 
 
 
