@@ -1,62 +1,26 @@
 ---
-- name: Install Docker on VM (Full setup)
-  hosts: todo-vm
+- name: Install Docker - Minimal Version
+  hosts: ec2
   become: true
 
   tasks:
-    - name: Remove old / conflicting Docker packages
-      apt:
-        name:
-          - docker.io
-          - docker-compose
-          - docker-compose-v2
-          - docker-doc
-          - podman-docker
-          - containerd
-          - runc
-        state: absent
-        purge: yes
-
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-    - name: Install prerequisites
-      apt:
-        name:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - software-properties-common
+    - name: Install Docker
+      yum:
+        name: docker
         state: present
 
-    - name: Add Docker GPG key
-      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-      args:
-        warn: false
-
-    - name: Add Docker repository
-      apt_repository:
-        repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-        state: present
-
-    - name: Update apt cache after adding Docker repo
-      apt:
-        update_cache: yes
-
-    - name: Install Docker packages
-      apt:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-          - docker-buildx-plugin
-          - docker-compose-plugin
-        state: latest
-        update_cache: yes
-
-    - name: Ensure Docker service is running and enabled
+    - name: Start Docker
       service:
         name: docker
         state: started
         enabled: yes
+
+    - name: Test Docker
+      command: docker ps
+      register: docker_test
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Show Docker status
+      debug:
+        msg: "Docker is running: {{ 'Yes' if docker_test.rc == 0 else 'No' }}"
